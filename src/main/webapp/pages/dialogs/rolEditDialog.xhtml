@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:body>
+	<p:dialog widgetVar="rolEditDialogWidget" id="rolAddDialogId"
+		width="500" modal="true" closable="true" draggable="false"
+		resizable="false">
+		<f:facet name="header">
+			<h:outputText value="Manage Rol Details" />
+		</f:facet>
+		<h:form id="rolEditDialogForm" prependId="false">
+			<h:panelGrid columns="2" width="100%">
+				<h:outputLabel for="txtRoleId" value="* Id" />
+				<p:inputText id="txtRoleId" size="15" maxlength="10" required="true"
+					requiredMessage="Id: Field required"
+					value="#{listaRolBean.rol.roleId}" />
+				<h:outputLabel for="txtRoleName" value="* Name" />
+				<p:inputText id="txtRoleName" size="30" maxlength="20"
+					required="true" requiredMessage="Name: Field required"
+					value="#{listaRolBean.rol.roleName}" />
+				<f:facet name="footer">
+					<p:toolbar>
+						<f:facet name="left">
+							<h:outputText value="* Required Fields" />
+						</f:facet>
+						<f:facet name="right">
+							<p:commandButton value="Store" action="#{listaRolBean.grabar}"
+								icon="ui-icon-disk" update=":rolForm:panel" />
+							<p:commandButton value="Cancel" immediate="true"
+								onclick="PF('rolEditDialogWidget').hide();" />
+						</f:facet>
+					</p:toolbar>
+				</f:facet>
+			</h:panelGrid>
+		</h:form>
+	</p:dialog>
+</h:body>
+</html>

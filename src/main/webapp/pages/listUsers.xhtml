@@ -1,0 +1,159 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" template="/template/template.xhtml">
+	<ui:define name="head"/>
+	<ui:define name="implementation">
+		<h:form id="userForm">
+			<h:inputHidden value="#{listaUserBean.tipoEdicion}" id="operacion" />
+			<p:growl id="showMessages" showDetail="true" />
+			<p:panel id="panel1">
+				<f:facet name="header">
+					<h:outputText
+						value="Rol: #{listaUserBean.rol.roleId} - #{listaUserBean.rol.roleName}"
+						rendered="#{listaUserBean.rol!=null}" />
+					<h:panelGrid columns="3" rendered="#{listaUserBean.rol==null}">
+						<p:outputLabel for="txtRoleId" value="Rol" />
+						<p:selectOneMenu value="#{listaUserBean.roleId}" id="txtRoleId"
+							style="width:320px;">
+							<f:selectItem itemValue="0" itemLabel="All" />
+							<f:selectItems value="#{listaUserBean.rols}" />
+						</p:selectOneMenu>
+						<p:commandButton value="Search" icon="ui-icon-search"
+							actionListener="#{listaUserBean.filterByRol}" ajax="false" />
+					</h:panelGrid>
+				</f:facet>
+				<p:toolbar>
+					<f:facet name="left">
+						<h:outputText value="Manage Users" />
+					</f:facet>
+					<f:facet name="right">
+						<p:commandButton value="New" action="#{listaUserBean.nuevo}"
+							icon="ui-icon-newwin" update=":userEditDialogForm"
+							onclick="PF('userEditDialogWidget').show();" />
+						<p:commandButton value="back" action="#{listaUserBean.regresar}"
+							icon="ui-icon-arrow-1-w" immediate="true" />
+					</f:facet>
+				</p:toolbar>
+				<p:dataTable var="row" value="#{listaUserBean.listaDatos}"
+					rowIndexVar="index" widgetVar="usersTable" id="table" rows="10"
+					paginator="true" emptyMessage="No users found with given criteria"
+					filteredValue="#{listaUserBean.filteredUsers}">
+
+					<f:facet name="header">
+						<p:outputPanel>
+							<h:outputText value="Search all fields:" />
+							<p:inputText id="globalFilter"
+								onkeyup="PF('usersTable').filter()" style="width:150px"
+								placeholder="Enter keyword" />
+						</p:outputPanel>
+					</f:facet>
+					<p:column sortBy="#{row.id}" filterBy="#{row.id}"
+						headerText="User Id" filterMatchMode="contains">
+						<h:outputText value="#{row.id}" />
+					</p:column>
+					<p:column sortBy="#{row.userLogin}" filterBy="#{row.userLogin}"
+						headerText="User Name" filterMatchMode="contains">
+						<h:outputText value="#{row.userLogin}" />
+					</p:column>
+					<p:column sortBy="#{row.rol.roleName}"
+						filterBy="#{row.rol.roleName}" headerText="Rol"
+						filterMatchMode="contains">
+						<h:outputText value="#{row.rol.roleName}" />
+					</p:column>
+					<p:column>
+						<p:commandButton onclick="PF('userEditDialogWidget').show();"
+							title="Edit" icon="ui-icon-pencil" update=":userEditDialogForm">
+							<f:setPropertyActionListener target="#{listaUserBean.user}"
+								value="#{row}" />
+							<f:setPropertyActionListener
+								target="#{listaUserBean.tipoEdicion}" value="2" />
+							<f:setPropertyActionListener
+								target="#{listaUserBean.rowSelected}" value="#{index}" />
+						</p:commandButton>
+						<p:spacer width="10px" />
+						<p:commandButton icon="ui-icon-trash" title="Delete"
+							onclick="PF('userDeleteDialogWidget').show();"
+							update=":userDeleteDialogForm">
+							<f:setPropertyActionListener target="#{listaUserBean.user}"
+								value="#{row}" />
+						</p:commandButton>
+					</p:column>
+				</p:dataTable>
+			</p:panel>
+			<p:messages id="messages" showDetail="true" autoUpdate="true"
+				closable="true" />
+		</h:form>
+		<p:dialog widgetVar="userDeleteDialogWidget" id="userDeleteDialogId"
+			height="100" width="300" modal="true" closable="true"
+			draggable="false" resizable="false">
+			<f:facet name="header">
+				<h:outputText value="Warning" />
+			</f:facet>
+			<h:form id="userDeleteDialogForm" prependId="false">
+				<h:outputText value="Do you want to delete this record?" />
+				<br />
+				<h:outputText value="User: #{listaUserBean.user.userLogin}" />
+				<br />
+				<br />
+				<p:toolbar>
+					<f:facet name="right">
+						<p:commandButton value="Delete" icon="ui-icon-plus"
+							action="#{listaUserBean.delete()}" update=":userForm:table" />
+						<p:commandButton value="Cancel" icon="ui-icon-cancel"
+							onclick="PF('userDeleteDialogWidget').hide();" type="button" />
+					</f:facet>
+				</p:toolbar>
+			</h:form>
+		</p:dialog>
+
+		<p:dialog widgetVar="userEditDialogWidget" id="userEditDialogId"
+			width="500" modal="true" closable="true" draggable="false" resizable="false">
+			<f:facet name="header">
+				<h:outputText value="Manage User Details" />
+			</f:facet>
+			<h:form id="userEditDialogForm" prependId="false">
+				<h:panelGrid columns="2" columnClasses="label,campo" width="100%">
+					<p:outputLabel for="txtRoleId" value="* Rol" />
+					<p:selectOneMenu value="#{listaUserBean.user.roleId}"
+						required="true" requiredMessage="Rol is Mandatory"
+						id="txtRoleId" style="width:320px;">
+						<f:selectItem itemValue="" itemLabel="Rols..." />
+						<f:selectItems value="#{listaUserBean.rols}" />
+					</p:selectOneMenu>
+					<p:outputLabel for="txtUserId" value="* User Id"
+						rendered="#{listaUserBean.tipoEdicion==1}" />
+					<p:inputText id="txtUserId" size="3" maxlength="2" required="true"
+						rendered="#{listaUserBean.tipoEdicion==1}"
+						requiredMessage="UserId is Mandatory"
+						value="#{listaUserBean.user.id}" />
+					<p:outputLabel for="txtUserName" value="User Name" />
+					<p:inputText id="txtUserName" size="25" maxlength="20"
+						value="#{listaUserBean.user.userLogin}" />
+					<p:outputLabel for="txtUserPass" value="User Password" />
+					<p:password id="txtUserPass" size="25" maxlength="20"
+						value="#{listaUserBean.user.userPass}" />
+					<p:outputLabel for="txtUserNice" value="Nice Name" />
+					<p:inputText id="txtUserNice" size="25" maxlength="20"
+						value="#{listaUserBean.user.userNicename}" />
+
+				</h:panelGrid>
+				<p:toolbar>
+					<f:facet name="left">
+						<h:outputText value="* Required Fields" />
+					</f:facet>
+					<f:facet name="right">
+						<p:commandButton value="Save" action="#{listaUserBean.grabar}"
+							update=":userForm:table" icon="ui-icon-disk" />
+						<p:commandButton value="Cancel" icon="ui-icon-cancel"
+							immediate="true" onclick="PF('userEditDialogWidget').hide();" />
+					</f:facet>
+				</p:toolbar>
+				<p:messages id="editMessages" showDetail="true" autoUpdate="true"
+					closable="true" />
+			</h:form>
+		</p:dialog>
+
+	</ui:define>
+</ui:composition>

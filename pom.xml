@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.wolfsoft.hr</groupId>
+	<artifactId>HumanResourcesPF</artifactId>
+	<name>HumanResourcesPF</name>
+	<version>1.0</version>
+	<packaging>war</packaging>
+
+	<repositories>
+		<repository>
+			<id>prime-repo</id>
+			<name>PrimeFaces Maven Repository</name>
+			<url>http://repository.primefaces.org</url>
+			<layout>default</layout>
+		</repository>
+	</repositories>
+
+	<build>
+		<finalName>HumanResourcesPF</finalName>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.2</version>
+			</plugin>
+			<plugin>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.1.1</version>
+			</plugin>
+		</plugins>
+	</build>
+
+	<dependencies>
+		<!--Primefaces -->
+		<dependency>
+			<groupId>org.primefaces</groupId>
+			<artifactId>primefaces</artifactId>
+			<version>5.0</version>
+		</dependency>
+		<!-- JSF 2 -->
+		<dependency>
+			<groupId>com.sun.faces</groupId>
+			<artifactId>jsf-api</artifactId>
+			<version>2.1.11</version>
+		</dependency>
+		<dependency>
+			<groupId>com.sun.faces</groupId>
+			<artifactId>jsf-impl</artifactId>
+			<version>2.1.11</version>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+			<version>1.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>2.5</version>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.servlet.jsp</groupId>
+			<artifactId>jsp-api</artifactId>
+			<version>2.1</version>
+		</dependency>
+
+		<!-- EL -->
+		<dependency>
+			<groupId>org.glassfish.web</groupId>
+			<artifactId>el-impl</artifactId>
+			<version>2.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.8.2</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
+
+		<!-- JPA 
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.6</version>
+		</dependency>
+		-->
+		<dependency>
+			<groupId>org.hsqldb</groupId>
+			<artifactId>hsqldb</artifactId>
+			<version>2.2.8</version>
+		</dependency>		
+		<dependency>
+			<groupId>org.hibernate.javax.persistence</groupId>
+			<artifactId>hibernate-jpa-2.0-api</artifactId>
+			<version>1.0.1.Final</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-entitymanager</artifactId>
+			<version>4.0.1.Final</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-jpa</artifactId>
+			<version>1.0.1.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-commons-core</artifactId>
+			<version>1.4.0.RELEASE</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-jpa</artifactId>
+			<version>1.2.0.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>cglib</groupId>
+			<artifactId>cglib</artifactId>
+			<version>2.2.2</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-dbcp</groupId>
+			<artifactId>commons-dbcp</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
+			<version>1.1.1</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-collections</groupId>
+			<artifactId>commons-collections</artifactId>
+			<version>3.0</version>
+		</dependency>
+	</dependencies>
+
+	<profiles>
+		<profile>
+			<id>jee6</id>
+			<build>
+				<plugins>
+					<plugin>
+						<artifactId>maven-war-plugin</artifactId>
+						<configuration>
+							<webappDirectory>${project.build.directory}/${project.build.finalName}-jee6</webappDirectory>
+							<classifier>jee6</classifier>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+
+			<dependencies>
+				<dependency>
+					<groupId>javax.faces</groupId>
+					<artifactId>javax.faces-api</artifactId>
+					<scope>provided</scope>
+				</dependency>
+				<dependency>
+					<groupId>org.glassfish</groupId>
+					<artifactId>javax.faces</artifactId>
+					<scope>provided</scope>
+				</dependency>
+				<dependency>
+					<groupId>javax.transaction</groupId>
+					<artifactId>jta</artifactId>
+					<version>1.1</version>
+					<scope>provided</scope>
+				</dependency>
+			</dependencies>
+		</profile>
+		<profile>
+			<id>release</id>
+			<build>
+				<plugins>
+					<plugin>
+						<artifactId>maven-war-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>jee6</id>
+								<phase>package</phase>
+								<goals>
+									<goal>war</goal>
+								</goals>
+								<configuration>
+									<webappDirectory>${project.build.directory}/${project.build.finalName}-jee6</webappDirectory>
+									<classifier>jee6</classifier>
+									<packagingExcludes>WEB-INF/lib/javax.faces*</packagingExcludes>
+									<warSourceExcludes>WEB-INF/lib/javax.faces*</warSourceExcludes>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+</project>

@@ -1,0 +1,154 @@
+<!DOCTYPE html [
+    <!ENTITY nbsp "&#160;">
+    <!ENTITY bull "&#8226;">
+    <!ENTITY copy "&#169;">
+]>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<f:view locale="#{localeBean.locale}" contentType="text/html">	
+<h:head>
+	<f:facet name="first">
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta name="viewport"
+			content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<link rel="shortcut icon" type="image/png"
+			href="#{request.contextPath}/resources/main/images/favicon.png" />
+	</f:facet>
+
+	<title>PrimeFaces ShowCase</title>
+	<h:outputStylesheet name="main/css/showcase.css" />
+	<h:outputStylesheet name="main/css/perfect-scrollbar.css" />
+	<h:outputScript name="main/js/perfect-scrollbar.js" />
+	<h:outputScript name="main/js/showcase.js" />
+	<ui:insert name="head" />
+</h:head>
+
+<h:body>
+
+	<!-- PC CONTENT STARTS HERE-->
+	<div class="PC">
+		<div id="MENUSIDE">
+			<div id="MENUSIDEindent">
+				<span id="LOGO" class="bordersOfMenuSide"> <h:graphicImage
+						name="main/images/logo.svg" /> <h:graphicImage
+						styleClass="hiddenIcons" name="main/images/logoBlue.svg" />
+					<div id="hiddenLogoTextEl" class="hiddenLogoText">
+						<span class="dispBlock logoDarkText fontSize30">PrimeFaces</span>
+						<span class="dispBlock logoBlueText fontSize30 mediumFont">HR</span>
+					</div>
+				</span> <span class="emptyBox" />
+				<hr />
+				<span class="MenuSideMainLink bordersOfMenuSide"
+					onclick="Showcase.openSubMenu(this);"><h:graphicImage
+						name="main/images/mono/overlay.svg" /> <h:graphicImage
+						styleClass="hiddenIcons" name="main/images/mono/overlayBlue.svg" /><span
+					class="MainLinkText">Menu</span></span>
+				<div class="SubMenuLinkContainer">
+					<ui:include src="includes/navigation.xhtml" />
+				</div>
+			</div>
+		</div>
+		<div id="CONTENTSIDE">
+			<div id="CONTENTSIDEindent">
+
+				<!-- header bar start-->
+				<div class="ContentSideSections" id="PFTopLinksCover"
+					style="height: 85px;">
+					<span class="dispBlock logoDarkText fontSize30">PrimeFaces</span> <span
+						class="dispBlock logoBlueText fontSize30 mediumFont">HumanResources</span>
+					<span class="dispBlock logoBlueText"> <h:outputText
+							value="#{msg.label_user_logged} #{userBean.userNicename}" />
+					</span> <span class="floatRight"> <h:form>
+							<h:panelGrid columns="4">
+								<h:panelGroup>
+									<h:commandLink id="switchToEnglish"
+										action="#{localeBean.setSelectedLocale}">
+										<f:param name="locale" value="en_UK" />
+										<h:graphicImage library="images" value="/resources/main/images/en.png"
+											alt="Switch language to English" />
+									</h:commandLink>
+									<p:tooltip for="switchToEnglish">
+										<h:outputFormat value="#{msg.label_language_switch}">
+											<f:param value="English" />
+										</h:outputFormat>
+									</p:tooltip>
+								</h:panelGroup>
+								<h:panelGroup>
+									<h:commandLink id="switchToSpanish"
+										action="#{localeBean.setSelectedLocale}">
+										<f:param name="locale" value="es_ES" />
+										<h:graphicImage library="images" value="/resources/main/images/es.png"
+											alt="Switch language to Spanish" />
+									</h:commandLink>
+									<p:tooltip for="switchToSpanish">
+										<h:outputFormat value="#{msg.label_language_switch}">
+											<f:param value="Español" />
+										</h:outputFormat>
+									</p:tooltip>
+								</h:panelGroup>
+								<p:commandButton value="#{msg.label_home}" immediate="true"
+									icon="ui-icon-home"
+									action="/pages/home.xhtml?faces-redirect=true" />
+								<p:commandButton value="#{msg.label_loggout}" immediate="true"
+									icon="ui-icon-unlocked" action="#{loginBean.logout}" />
+							</h:panelGrid>
+
+						</h:form>
+					</span>
+				</div>
+				<!-- header bar end-->
+
+				<ui:insert name="content">
+
+					<div class="ContentSideSections Implementation"
+						style="background-color: #dfe4e6;">
+						<ui:insert name="title" />
+						<ui:insert name="description" />
+						<ui:insert name="implementation" />
+					</div>
+
+				</ui:insert>
+
+				<!-- footer start-->
+				<div class="ContentSideSections" align="center">
+					Copyright © All Rights Reserved - Wolfsoft 2014<br /> Help and
+					support anywhere and anytime
+					<div style="clear: both" />
+				</div>
+				<!-- footer end-->
+
+			</div>
+		</div>
+
+	</div>
+	<!-- PC CONTENT END-->
+
+	<ui:insert name="status">
+		<p:ajaxStatus
+			style="width:64px;height:64px;position:fixed;right:5px;bottom:5px">
+			<f:facet name="start">
+				<p:graphicImage name="main/images/loader.gif" />
+			</f:facet>
+
+			<f:facet name="complete">
+				<h:outputText value="" />
+			</f:facet>
+		</p:ajaxStatus>
+	</ui:insert>
+
+	<ui:insert name="highlight">
+		<script language="javascript"
+			src="#{request.contextPath}/resources/main/js/sh.js"></script>
+		<script language="javascript">
+            SyntaxHighlighter.all();
+        </script>
+	</ui:insert>
+
+	<ui:insert name="body"></ui:insert>
+</h:body>
+</f:view>
+</html>

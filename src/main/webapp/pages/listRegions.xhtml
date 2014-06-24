@@ -1,0 +1,126 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" template="/template/template.xhtml">
+	<ui:define name="head" />
+	<ui:define name="implementation">
+		<h:form id="regionsForm" prependId="false">
+			<h:inputHidden value="#{listRegionBean.editMode}" id="operacion" />
+			<p:growl id="showMessages" showDetail="true" />
+			<p:panel id="panel1">
+				<p:toolbar>
+					<f:facet name="header">
+						<h:outputText value="#{msg.m_regions}" />
+					</f:facet>
+					<f:facet name="right">
+						<p:commandButton value="#{msg.label_new}"
+							actionListener="#{listRegionBean.newRegions}"
+							icon="ui-icon-newwin" update=":regionEditDialogForm"
+							onclick="PF('regionEditDialogWidget').show();" />
+						<p:commandButton value="#{msg.label_back}"
+							action="#{listRegionBean.back()}" icon="ui-icon-arrow-1-w"
+							immediate="true" />
+					</f:facet>
+				</p:toolbar>
+				<p:dataTable var="row" value="#{listRegionBean.regionsList}"
+					rowIndexVar="index" widgetVar="regionsTable" id="table" rows="10"
+					paginator="true" emptyMessage="#{msg.message_no_items_found}"
+					filteredValue="#{listRegionBean.filteredRegions}">
+					<f:facet name="header">
+						<p:outputPanel>
+							<h:outputText value="#{msg.label_search_all}" />
+							<p:inputText id="globalFilter"
+								onkeyup="PF('regionsTable').filter()" style="width:250px"
+								placeholder="#{msg.label_enter_keyword}" />
+						</p:outputPanel>
+					</f:facet>
+					<p:column sortBy="#{row.regionId}" filterBy="#{row.regionId}"
+						headerText="#{msg.label_reg_id}" filterMatchMode="contains">
+						<h:outputText value="#{row.regionId}" />
+					</p:column>
+					<p:column sortBy="#{row.regionName}" filterBy="#{row.regionName}"
+						headerText="#{msg.label_reg_name}" filterMatchMode="contains">
+						<h:outputText value="#{row.regionName}" />
+					</p:column>
+					<p:column>
+						<p:commandButton onclick="PF('regionEditDialogWidget').show();"
+							title="Edit" icon="ui-icon-pencil" update=":regionEditDialogForm">
+							<f:setPropertyActionListener target="#{listRegionBean.region}"
+								value="#{row}" />
+							<f:setPropertyActionListener target="#{listRegionBean.editMode}"
+								value="true" />
+							<f:setPropertyActionListener
+								target="#{listRegionBean.rowSelected}" value="#{index}" />
+						</p:commandButton>
+						<p:spacer width="10px" />
+						<p:commandButton icon="ui-icon-trash" title="Delete"
+							onclick="PF('regionDeleteDialogWidget').show();"
+							update=":regionDeleteDialogForm">
+							<f:setPropertyActionListener target="#{listRegionBean.region}"
+								value="#{row}" />
+						</p:commandButton>
+					</p:column>
+				</p:dataTable>
+			</p:panel>
+		</h:form>
+		<p:dialog widgetVar="regionDeleteDialogWidget"
+			id="regionDeleteDialogId" height="100" width="300" modal="true"
+			closable="true" draggable="false" resizable="false">
+			<f:facet name="header">
+				<h:outputText value="Warning" />
+			</f:facet>
+			<h:form id="regionDeleteDialogForm" prependId="false">
+				<h:outputText value="Do you want to delete this record?" />
+				<br />
+				<h:outputText value="Region: #{listRegionBean.region.regionName}" />
+				<br />
+				<br />
+				<p:toolbar>
+					<f:facet name="right">
+						<p:commandButton value="#{msg.label_delete}" icon="ui-icon-plus"
+							action="#{listRegionBean.delete()}" update=":regionsForm:table" />
+						<p:commandButton value="#{msg.label_cancel}" icon="ui-icon-cancel"
+							onclick="PF('regionDeleteDialogWidget').hide();" type="button" />
+					</f:facet>
+				</p:toolbar>
+			</h:form>
+		</p:dialog>
+		<p:dialog widgetVar="regionEditDialogWidget" id="regionEditDialogId"
+			width="500" modal="true" closable="true" draggable="false"
+			resizable="false">
+			<f:facet name="header">
+				<h:outputText value="Manage User Details" />
+			</f:facet>
+			<h:form id="regionEditDialogForm" prependId="false">
+				<h:panelGrid columns="2" id="editGrid">
+					<p:outputLabel value="#{msg.label_reg_id}"
+						rendered="#{!listRegionBean.editMode}" for="regionId" />
+					<p:inputText id="regionId" placeholder="#{msg.label_reg_id}"
+						required="true"
+						requiredMessage="#{msg.label_reg_id} #{msg.label_mandatory}"
+						rendered="#{!listRegionBean.editMode}"
+						value="#{listRegionBean.region.regionId}" />
+					<p:outputLabel value="#{msg.label_reg_name}" for="regionName" />
+					<p:inputText id="regionName" placeholder="#{msg.label_reg_name}"
+						required="true" requiredMessage="#{msg.label_reg_name} #{msg.label_mandatory}"
+						value="#{listRegionBean.region.regionName}" />
+				</h:panelGrid>
+				<p:toolbar>
+					<f:facet name="left">
+						<h:outputText value="#{msg.label_required}" />
+					</f:facet>
+					<f:facet name="right">
+						<p:commandButton value="#{msg.label_save}"
+							action="#{listRegionBean.saveEntity()}"
+							update=":regionsForm:table" icon="ui-icon-disk" />
+						<p:commandButton value="#{msg.label_cancel}" icon="ui-icon-cancel"
+							immediate="true" onclick="PF('regionEditDialogWidget').hide();" />
+					</f:facet>
+				</p:toolbar>
+				<p:messages id="editMessages" showDetail="true" autoUpdate="true"
+					closable="true" />
+			</h:form>
+		</p:dialog>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,36 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" template="/template/login_template.xhtml">
+
+	<ui:define name="head"/>
+	<ui:define name="implementation">
+		<h:form>
+			<p:growl showDetail="false" life="3000" />
+			<p:panel header="Login" style="width:350px">
+				<f:facet name="header">
+					<div align="center">
+						<p:outputLabel value="#{msg.label_security}" />
+					</div>
+				</f:facet>
+				<h:panelGrid columns="2" cellpadding="5">
+					<h:outputLabel for="userName" value="#{msg.label_user_name}" />
+					<p:inputText id="userName" value="#{loginBean.userName}"
+						required="true"
+						requiredMessage="#{msg.label_user_name}: #{msg.label_mandatory}">
+					</p:inputText>
+					<h:outputLabel for="password" value="#{msg.label_user_pass}" />
+					<p:password id="password" value="#{loginBean.passWord}"
+						required="true"
+						requiredMessage="#{msg.label_user_pass}: #{msg.label_mandatory}">
+					</p:password>
+					<f:facet name="footer">
+						<p:commandButton action="#{loginBean.login}" icon="ui-icon-locked" value="#{msg.label_loggin}" ajax="false"/>
+					</f:facet>
+				</h:panelGrid>
+			</p:panel>
+			<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+		</h:form>
+	</ui:define>
+</ui:composition>
