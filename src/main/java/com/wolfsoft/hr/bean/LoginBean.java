@@ -8,8 +8,10 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
+import com.wolfsoft.hr.entity.Rol;
 import com.wolfsoft.hr.entity.User;
 import com.wolfsoft.hr.factory.ServicesFactory;
+import com.wolfsoft.hr.service.RolService;
 import com.wolfsoft.hr.service.UserService;
 import com.wolfsoft.hr.util.Utility;
 
@@ -22,9 +24,28 @@ public class LoginBean implements Serializable {
     private String passWord;
 	public static final String USER_BEAN_SESSION = "userBean";
 
+
     @PostConstruct
     public void postContruct() {
     	userService = ServicesFactory.getUserService();
+    	// Descomentar las siguientes lineas, si se ejecuta por primera vez
+//    	RolService rolService = ServicesFactory.getRolService();
+//    	if(userService.findAll().size()==0){
+//    		Rol rol=new Rol();
+//    		rol.setRoleId(1);
+//    		rol.setRoleName("Administrador");
+//    		rolService.save(rol);
+//    		User user=new User();
+//    		user.setId(1L);
+//    		user.setUserLogin("admin");
+//    		user.setUserPass("Master");
+//    		user.setUserNicename("Administrador");
+//    		user.setUserStatus(0);
+//    		user.setRol(rol);
+//    		userService.save(user);
+//    	}
+    		
+    		
     }
 
     public String login(){
