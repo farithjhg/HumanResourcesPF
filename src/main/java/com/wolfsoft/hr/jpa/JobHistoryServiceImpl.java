@@ -57,7 +57,6 @@ public class JobHistoryServiceImpl implements JobHistoryService {
 		return entity;
     }
 
-    @Override
     public void delete(JobHistory entity) {
         em.remove(findByPK(new JobHistoryPK(entity.getEmployeeId(),entity.getStartDate())));
     }

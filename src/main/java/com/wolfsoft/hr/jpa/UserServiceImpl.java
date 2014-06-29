@@ -56,17 +56,15 @@ public class UserServiceImpl implements UserService {
 		return entity;
     }
 
-    @Override
+
     public void delete(User entity) {
          em.remove(findByPK(entity.getId()));
     }
 
-	@Override
 	public List<User> findByUserLogin(String userName) {
 		return userRepository.findByUserLogin(userName);
 	}
 
-	@Override
 	public List<User> findByRoleId(Integer roleId) {
 		return userRepository.findByRoleId(roleId);
 	}

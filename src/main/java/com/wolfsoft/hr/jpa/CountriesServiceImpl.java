@@ -55,7 +55,6 @@ public class CountriesServiceImpl implements CountriesService {
 		return entity;
     }
 
-    @Override
     public void delete(Countries entity) {
          em.remove(findByPK(entity.getCountryId()));
     }

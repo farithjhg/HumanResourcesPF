@@ -56,7 +56,6 @@ public class RegionsServiceImpl implements RegionsService {
 		return entity;
     }
 
-    @Override
     public void delete(Regions entity) {
          em.remove(findByPK(entity.getRegionId()));
     }

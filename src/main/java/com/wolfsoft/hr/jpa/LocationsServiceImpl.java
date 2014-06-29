@@ -55,7 +55,7 @@ public class LocationsServiceImpl implements LocationsService {
 		return entity;
     }
 
-    @Override
+
     public void delete(Locations entity) {
          em.remove(findByPK(entity.getLocationId()));
     }

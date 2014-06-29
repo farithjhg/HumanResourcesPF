@@ -55,7 +55,6 @@ public class DepartmentsServiceImpl implements DepartmentsService {
 		return entity;
     }
 
-    @Override
     public void delete(Departments entity) {
          em.remove(findByPK(entity.getDepartmentId()));
     }

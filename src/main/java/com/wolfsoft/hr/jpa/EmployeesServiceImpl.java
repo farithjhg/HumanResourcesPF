@@ -62,12 +62,10 @@ public class EmployeesServiceImpl implements EmployeesService {
 		return employeesRepository.save(entity);
 	}
 
-	@Override
 	public void delete(Employees entity) {
 		em.remove(findByPK(entity.getEmployeeId()));
 	}
 
-	@Override
 	public List<Employees> searchByParametros(
 			Hashtable<Object, Object> camposWhere, String[] camposORDER_BY) {
 		return employeesRepository.searchByParametros(camposWhere,

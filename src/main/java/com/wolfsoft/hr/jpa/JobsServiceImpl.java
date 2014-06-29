@@ -55,7 +55,6 @@ public class JobsServiceImpl implements JobsService {
 		return entity;
     }
 
-    @Override
     public void delete(Jobs entity) {
          em.remove(findByPK(entity.getJobId()));
     }

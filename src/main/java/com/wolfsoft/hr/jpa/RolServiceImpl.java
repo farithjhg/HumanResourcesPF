@@ -56,7 +56,6 @@ public class RolServiceImpl implements RolService {
 		return entity;
     }
 
-    @Override
     public void delete(Rol entity) {
          em.remove(findByPK(entity.getRoleId()));
     }
