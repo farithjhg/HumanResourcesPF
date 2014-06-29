@@ -8,11 +8,15 @@
 			<base-name>com.wolfsoft.hr.messages</base-name>
 			<var>msg</var>
 		</resource-bundle>
+		<message-bundle>resources.application</message-bundle>
 		<locale-config>
             <default-locale>en_UK</default-locale>
             <supported-locale>en_UK</supported-locale>
             <supported-locale>es_ES</supported-locale>
         </locale-config>
+		<locale-config>
+			<default-locale>en</default-locale>
+		</locale-config>
 	</application>
 	<factory>
         <exception-handler-factory>com.wolfsoft.hr.util.ViewExpiredExceptionExceptionHandlerFactory</exception-handler-factory>
