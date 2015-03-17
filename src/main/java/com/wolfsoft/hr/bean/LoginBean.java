@@ -29,21 +29,21 @@ public class LoginBean implements Serializable {
     public void postContruct() {
     	userService = ServicesFactory.getUserService();
     	// Descomentar las siguientes lineas, si se ejecuta por primera vez
-//    	RolService rolService = ServicesFactory.getRolService();
-//    	if(userService.findAll().size()==0){
-//    		Rol rol=new Rol();
-//    		rol.setRoleId(1);
-//    		rol.setRoleName("Administrador");
-//    		rolService.save(rol);
-//    		User user=new User();
-//    		user.setId(1L);
-//    		user.setUserLogin("admin");
-//    		user.setUserPass("Master");
-//    		user.setUserNicename("Administrador");
-//    		user.setUserStatus(0);
-//    		user.setRol(rol);
-//    		userService.save(user);
-//    	}
+    	RolService rolService = ServicesFactory.getRolService();
+    	if(userService.findAll().size()==0){
+    		Rol rol=new Rol();
+    		rol.setRoleId(1);
+    		rol.setRoleName("Administrador");
+    		rolService.save(rol);
+    		User user=new User();
+    		user.setId(1L);
+    		user.setUserLogin("admin");
+    		user.setUserPass("Master");
+    		user.setUserNicename("Administrador");
+    		user.setUserStatus(0);
+    		user.setRol(rol);
+    		userService.save(user);
+    	}
     		
     		
     }

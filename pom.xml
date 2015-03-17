@@ -4,9 +4,9 @@
 
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.wolfsoft.hr</groupId>
-	<artifactId>HumanResourcesPF</artifactId>
-	<name>HumanResourcesPF</name>
+	<groupId>com.myasesor.con</groupId>
+	<artifactId>MyAsesor</artifactId>
+	<name>MyAsesor</name>
 	<version>1.0</version>
 	<packaging>war</packaging>
 
@@ -25,7 +25,7 @@
 	</repositories>
 
 	<build>
-		<finalName>HumanResourcesPF</finalName>
+		<finalName>MyAsesor</finalName>
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -90,18 +90,12 @@
 			<scope>compile</scope>
 		</dependency>
 
-		<!-- JPA 
+		<!-- JPA -->
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<version>5.1.6</version>
 		</dependency>
-		-->
-		<dependency>
-			<groupId>org.hsqldb</groupId>
-			<artifactId>hsqldb</artifactId>
-			<version>2.2.8</version>
-		</dependency>		
 		<dependency>
 			<groupId>org.hibernate.javax.persistence</groupId>
 			<artifactId>hibernate-jpa-2.0-api</artifactId>
